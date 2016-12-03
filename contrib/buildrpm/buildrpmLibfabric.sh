@@ -286,12 +286,15 @@ else
   build_opt="-v"
 fi
 cmd="rpmbuild $build_opt -bb $specfile $rpmbuild_options \
-  --define 'configopts $configure_options' \
   --define '_topdir $rpmbuilddir' \
   --define '_sourcedir $rpmbuilddir/SOURCES' \
   --define '_rpmdir $rpmbuilddir/RPMS' \
   --define '_specdir $rpmbuilddir/SPECS' \
   --define '_tmppath $rpmbuilddir/tmp'"
+
+if [[ -n "$configure_options" ]]; then
+  cmd="$cmd --define 'configopts $configure_options'"
+fi
 
 verbose "Build command used:"
 verbose "$cmd"
