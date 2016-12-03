@@ -68,7 +68,12 @@ verbose()
 
 runcmd()
 {
-  verbose "Executing: $*"
+  if [[ -z "$noop" ]]; then
+    verbose "Executing: $*"
+  else
+    verbose "Would have executed: $*"
+  fi
+
   if [[ -z "$noop" ]]; then
     eval "$*"
     st=$?
