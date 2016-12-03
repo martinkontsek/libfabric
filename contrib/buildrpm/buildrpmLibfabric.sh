@@ -46,6 +46,7 @@ noop=""
 install_in_opt=""
 unpack_spec=""
 verbose=""
+verboseoption=""
 st=""
 
 ##################################
@@ -164,6 +165,10 @@ while getopts noi:e:dc:r:svh flag; do
 done
 shift $(( OPTIND - 1 ));
 
+if [[ -n "$verbose" ]]; then
+  verboseoption="-v"
+fi
+
 ########################################
 # Check if there is at least 1 parameter
 # specified (tarball is mandatory)
@@ -233,18 +238,12 @@ if [[ -f "$specfile" ]]; then
 fi
 
 if [[ -n "$unpack_spec" ]]; then
-  if [[ -z "$verbose" ]]; then
-    runcmd "tar -xf \"$tarball\""
-    runcmd "cp -fp \"$tardirname/$specfile\" ."
-    runcmd "rm -rf \"$tardirname\""
-  else
-    verbose "Extracting tarball"
-    runcmd "tar -xvf \"$tarball\""
-    verbose "Copying specfile"
-    runcmd "cp -fpv \"$tardirname/$specfile\" ."
-    verbose "Cleanup after extraction"
-    runcmd "rm -rfv \"$tardirname\""
-  fi
+  verbose "Extracting tarball"
+  runcmd "tar -xf $verboseoption \"$tarball\""
+  verbose "Copying specfile"
+  runcmd "cp -fp $verboseoption \"$tardirname/$specfile\" ."
+  verbose "Cleanup after extraction"
+  runcmd "rm -rf $verboseoption \"$tardirname\""
 fi
 
 ##############################
@@ -265,18 +264,12 @@ fi
 #############################
 # Prepare directory for build
 #############################
-if [[ -z "$verbose" ]]; then
-  runcmd "rm -rf \"$rpmbuilddir\""
-  runcmd "mkdir -p \"$rpmbuilddir/SOURCES/\""
-  runcmd "cp -fp \"$tarball\" \"$rpmbuilddir/SOURCES/\""
-else
-  verbose "Cleanup old rpmbuild directory"
-  runcmd "rm -rfv \"$rpmbuilddir\""
-  verbose "Create rpmbuild SOURCES directory"
-  runcmd "mkdir -pv \"$rpmbuilddir/SOURCES/\""
-  verbose "Copy tarball to rpmbuild directory"
-  runcmd "cp -fpv \"$tarball\" \"$rpmbuilddir/SOURCES/\""
-fi
+verbose "Cleanup old rpmbuild directory"
+runcmd "rm -rf $verboseoption \"$rpmbuilddir\""
+verbose "Create rpmbuild SOURCES directory"
+runcmd "mkdir -p $verboseoption \"$rpmbuilddir/SOURCES/\""
+verbose "Copy tarball to rpmbuild directory"
+runcmd "cp -fp $verboseoption \"$tarball\" \"$rpmbuilddir/SOURCES/\""
 
 ###########
 # Build RPM
