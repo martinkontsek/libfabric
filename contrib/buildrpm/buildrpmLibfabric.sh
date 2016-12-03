@@ -180,9 +180,9 @@ if [[ -n "$verbose" ]]; then
 cat <<EOF
 
 ------------------------------------------------------------------------------
-====              Welcome to Libfabric RPM build script                   ====
+====              Welcome to the Libfabric RPM build script               ====
 ------------------------------------------------------------------------------
-You have specified this options:
+You have specified these options:
  $arguments
 ------------------------------------------------------------------------------
 
