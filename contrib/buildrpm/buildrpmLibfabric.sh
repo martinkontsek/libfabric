@@ -98,14 +98,13 @@ usage="Usage: $0 [-i provider_name] [-e provider_name]
  Provider options:
 
   -i    provider_name
-    include 'provider_name' provider support to the build
+             include 'provider_name' provider support to the build
 
   -e    provider_name
-    exclude 'provider_name' provider support from the build
+             exclude 'provider_name' provider support from the build
 
  General options:
-  -n         no op, do nothing
-               useful with -v option
+  -n         no op, do nothing (useful with -v option)
 
   -o         install under /opt/libfabric/_VERSION_
                {default: install under /usr/ }
